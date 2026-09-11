@@ -84,6 +84,13 @@ main{flex:1;display:flex;flex-direction:column;padding:22px 24px 0;overflow:hidd
   box-shadow:0 1px 0 rgba(255,255,255,.6), 0 10px 24px -18px rgba(0,0,0,.5);
   display:flex; flex-direction:column; overflow:hidden;
 }
+.ficha{position:relative}
+.ficha::after{
+  content:"";position:absolute;left:1px;right:1px;bottom:0;height:34px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(251,250,246,0),var(--papel) 85%);
+  opacity:0;transition:opacity .15s ease;
+}
+.ficha.hay-mas::after{opacity:1}
 .ficha.mov{animation:entra .16s ease}
 @keyframes entra{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.ficha.mov{animation:none}}
@@ -355,11 +362,11 @@ function ficha(){
       ${campo('Decisión', d.decision, 'grande')}
       ${campo(d.estado==='DEFINIDA'?'Por qué':'Recomendación y consecuencia', d.porque)}
       ${campo('Se descartó, y por qué', d.descartadas)}
-      <div class="pie">
-        <span>Toca en el informe <b>${esc(d.impacto)||'—'}</b></span>
-      </div>
     </div>
   </article>`;
+  const art=p.querySelector('.ficha'), cue=p.querySelector('.ficha-cuerpo');
+  const chk=()=>art.classList.toggle('hay-mas', cue.scrollTop + cue.clientHeight < cue.scrollHeight - 4);
+  cue.addEventListener('scroll',chk); requestAnimationFrame(chk); addEventListener('resize',chk);
   document.getElementById('conteo').textContent = (idx+1)+' de '+L.length;
   document.getElementById('prev').disabled = L.length<2;
   document.getElementById('next').disabled = L.length<2;
