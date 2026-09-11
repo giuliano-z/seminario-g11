@@ -245,14 +245,14 @@ kbd{
 <div class="lupa" id="lupa"></div>
 <footer>
   <span id="fuente" class="fuente">datos locales</span>
-  <a id="enlaceHoja" href="https://drive.google.com/drive/folders/14DPqbbIu9weJaFOIv4WNvkRV7UE34_95" target="_blank" rel="noopener">Comentar en la planilla</a>
+  <a id="enlaceHoja" href="https://docs.google.com/spreadsheets/d/1sJgijAT0ndz6pfr9rsetjciCPgymlVWNTJ3zQyv-GmM/edit" target="_blank" rel="noopener">Comentar en la planilla</a>
   <span class="teclas"><kbd>←</kbd> <kbd>→</kbd> para moverte · <kbd>1</kbd>–<kbd>4</kbd> cambia de vista</span>
 </footer>
 
 <script>
-const SHEET_ID = "1A2gxWm0Kw2dl2FuZmFF2e6DefJjV9RtQwATsIYKvc_I";
+const SHEET_ID = "1sJgijAT0ndz6pfr9rsetjciCPgymlVWNTJ3zQyv-GmM";
 // Pegá acá la URL que te da "Publicar en la web → CSV", o pasala por ?csv=... en el enlace.
-const CSV_PUBLICADA = "";
+const CSV_PUBLICADA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQq-9HNT_YOTszyVYB1dewKJDVOF2k1ydTx2u8uKDMAjhErq0PYnK1FevuZHG7hbhn7kRb1qgt3afIs/pub?gid=59308435&single=true&output=csv";
 const CSV_URL = new URLSearchParams(location.search).get('csv')
   || CSV_PUBLICADA
   || "https://docs.google.com/spreadsheets/d/" + SHEET_ID + "/gviz/tq?tqx=out:csv&sheet=Decisiones";
