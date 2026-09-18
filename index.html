@@ -20,7 +20,9 @@
 }
 [data-e="DEFINIDA"]{--c:var(--verde);--c-bg:var(--verde-palido);--c-tx:var(--verde-osc)}
 [data-e="PROPUESTA"]{--c:var(--celeste);--c-bg:var(--celeste-palido);--c-tx:var(--celeste-osc)}
-[data-e="EN DEBATE"],[data-e="A CONSULTAR"],[data-e="BLOQUEADA"]{--c:var(--sol);--c-bg:var(--sol-palido);--c-tx:var(--sol-osc)}
+[data-e="EN DEBATE"]{--c:#F6B40E;--c-bg:#FDF4DA;--c-tx:#8A6100}
+[data-e="A CONSULTAR"]{--c:#8E6BC7;--c-bg:#F0EAF9;--c-tx:#5E3F99}
+[data-e="BLOQUEADA"]{--c:#E5484D;--c-bg:#FDECEC;--c-tx:#A8262A}
 
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
@@ -67,6 +69,9 @@ main>section{flex:1;min-height:0}
 .progreso{margin:12px 2px 6px;font-size:12px;color:var(--tinta-3)}
 .barra{height:3px;background:var(--linea);border-radius:2px;overflow:hidden;margin:0 2px}
 .barra span{display:block;height:100%;background:var(--verde);border-radius:2px;transition:width .3s ease}
+.leyenda{display:flex;flex-wrap:wrap;gap:4px 10px;margin:12px 2px 0;font-size:11px;color:var(--tinta-3)}
+.leyenda span{display:inline-flex;align-items:center;gap:5px}
+.leyenda i{width:6px;height:6px;border-radius:50%;background:var(--c)}
 .busq-info{margin:10px 2px 0;font-size:12px;color:var(--tinta-2)}
 .busq-info button{color:var(--celeste-osc)}
 .lista{list-style:none;margin:0;padding:2px 8px 24px;overflow-y:auto;overscroll-behavior:contain;flex:1;min-height:0}
@@ -89,6 +94,7 @@ main>section{flex:1;min-height:0}
 .ficha-id{font-size:13px;color:var(--tinta-3);font-variant-numeric:tabular-nums}
 .sello{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--tinta-2)}
 .sello::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--chapa-osc))}
+.sello{color:var(--c-tx,var(--tinta-2))}
 .ficha-meta{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--tinta-3)}
 .btn-link{font-size:13px;color:var(--celeste-osc);padding:4px 8px;border-radius:6px}
 .btn-link:hover{background:var(--gris)}
@@ -300,6 +306,7 @@ dialog::backdrop{background:rgba(0,0,0,.3)}
         <p class="progreso" id="progreso"></p>
         <div class="barra"><span id="barra"></span></div>
         <div class="busq-info" id="busqInfo" hidden></div>
+        <div class="leyenda" id="leyenda"></div>
       </div>
       <ol class="lista" id="lista"></ol>
     </aside>
@@ -783,6 +790,7 @@ function renderChips(){
   const tot = DATOS.length, def = DATOS.filter(d=>d.estado==="DEFINIDA").length;
   $("#progreso").textContent = `${tot-def} sin cerrar de ${tot}`;
   $("#barra").style.width = (tot ? Math.round(def/tot*100) : 0) + "%";
+  $("#leyenda").innerHTML = Object.entries(ESTADOS).map(([e,v])=>`<span data-e="${e}"><i></i>${v.plural}</span>`).join("");
   const info = $("#busqInfo");
   if(st.q){
     const n = lista().length;
